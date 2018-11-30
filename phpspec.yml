@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: contatos
+        psr4_prefix: contatos
+        src_path: app
