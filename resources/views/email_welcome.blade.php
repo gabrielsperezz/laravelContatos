@@ -1,0 +1,1 @@
+<h1> Bem vindo a plataforma de Contatos em Laravel {{ Auth::user()->name }}</h1>

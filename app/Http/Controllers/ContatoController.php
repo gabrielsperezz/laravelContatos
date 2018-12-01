@@ -6,6 +6,8 @@ use contatos\ContatoTelefone;
 use contatos\Http\Requests\ContatosRequest;
 use contatos\Contato;
 use contatos\TipoTelefone;
+use Illuminate\Mail\Mailer;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 
 class ContatoController extends Controller
@@ -53,6 +55,10 @@ class ContatoController extends Controller
     public function inserir(ContatosRequest $request){
 
         $contato = Contato::create($request->all());
+
+        Mail::send('email_welcome', [], function($message) use($contato){
+            $message->to($contato->getAttribute("email"), $contato->getAttribute("nome"))->subject('Seja bem vindo '. $contato->getAttribute("nome"). "!");
+        });
 
         return response()->json(["msg" => "Cadastrado com sucesso", "contato" => $contato]);
     }
