@@ -1,21 +1,25 @@
 <?php
 
 
-Route::get('/', function()
-{
-    return '<h1>Primeira lógica com Laravel</h1>';
-});
+#APP ROUTES
+Route::get('/',"HomeController@home");
+Route::get('/home',"HomeController@home");
+Route::get('/contatos/busca', 'ContatoController@listarContatos');
+Route::get('/contatos/form', 'ContatoController@novo');
+Route::get('/contatos/form/{id}', 'ContatoController@listarPorId')->where('id', '[0-9]+');
 
+#API ROUTES
+Route::post('/contatos', 'ContatoController@inserir');
+Route::put('/contatos/{id}', 'ContatoController@atualizar');
+Route::delete('/contatos/{id}', 'ContatoController@remover');
 
-Route::get('/contatos', 'ContatoController@lista');
-Route::get('/contatos/mostra/{id?}', 'ContatoController@mostra')->where('id', '[0-9]+');
-Route::get('/contatos/novo', 'ContatoController@novo');
-Route::post('/contatos/adiciona', 'ContatoController@adiciona');
-Route::get('/contatos/remove/{id}', 'ContatoController@remove');
+Route::post('/contatos/telefone', 'ContatoTelefoneController@inserir');
+Route::put('/contatos/telefone/{id}', 'ContatoTelefoneController@atualizar');
+Route::get('/contatos/telefone/{id}', 'ContatoTelefoneController@listarTelefonePorId');
+Route::delete('/contatos/telefone/{id}', 'ContatoTelefoneController@remover');
+Route::get('/contatos/{idContato}/telefones', 'ContatoTelefoneController@buscarTelefonesPorIdContato');
 
-
-Route::get('home', 'HomeController@index');
-
+#AUTH ROUTES
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',

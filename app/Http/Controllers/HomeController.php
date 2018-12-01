@@ -1,36 +1,27 @@
 <?php namespace contatos\Http\Controllers;
 
+use contatos\Contato;
+use contatos\ContatoTelefone;
+use contatos\TipoTelefone;
+use contatos\User;
+
 class HomeController extends Controller {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders your application's "dashboard" for users that
-	| are authenticated. Of course, you are free to change or remove the
-	| controller as you wish. It is just here to get your app started!
-	|
-	*/
-
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
 	public function __construct()
 	{
-		$this->middleware('auth');
+        $this->middleware('auth');
 	}
 
-	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
-	 */
-	public function index()
+	public function home()
 	{
-		return view('home');
+        $params =  [
+            "total_telefone_contatos" => count(ContatoTelefone::all(["id"])),
+            "total_contatos" =>  count(Contato::all(["id"])),
+            "total_logins" => count(User::all(["id"])),
+            "total_tipo" => count(TipoTelefone::all(["id"]))
+        ];
+
+		return view('home')->with($params);
 	}
 
 }

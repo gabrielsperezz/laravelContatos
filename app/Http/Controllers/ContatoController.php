@@ -2,10 +2,10 @@
 
 namespace contatos\Http\Controllers;
 
+use contatos\ContatoTelefone;
 use contatos\Http\Requests\ContatosRequest;
 use contatos\Contato;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\DB;
+use contatos\TipoTelefone;
 use Illuminate\Support\Facades\Request;
 
 class ContatoController extends Controller
@@ -16,44 +16,61 @@ class ContatoController extends Controller
 
     }
 
-    public function lista(){
-
+    public function listarContatos(){
         $contatos = Contato::all();
-
         return view('contatos.listagem')->with('contatos', $contatos);
     }
 
-    public function mostra($id){
+    public function listarPorId($id){
         $contato = Contato::find($id);
         if(empty($contato)) {
             return "Esse contato não existe";
         }
-        return view('contato.detalhes')->with('c', $contato);
+
+        $telefones = ContatoTelefone::where("id_contato", $id)->get();
+
+        $params = [
+            "tipos_telefones" => TipoTelefone::all(),
+            "telefones" => $telefones,
+            "contato" => $contato
+        ];
+
+        return view('contatos.formulario')->with($params);
     }
 
     public function novo(){
-        return view('contato.formulario');
+        $contato = new \StdClass();
+
+        $params = [
+            "tipos_telefones" => TipoTelefone::all(),
+            "telefones" => [],
+            "contato" => $contato
+        ];
+
+        return view('contatos.formulario')->with($params);
     }
 
-    public function adiciona(ContatosRequest $request){
+    public function inserir(ContatosRequest $request){
 
-        Contato::create($request->all());
+        $contato = Contato::create($request->all());
 
-        return redirect()
-            ->action('ContatoController@lista')
-            ->withInput(Request::only('nome'));
+        return response()->json(["msg" => "Cadastrado com sucesso", "contato" => $contato]);
     }
 
-    public function remove($id){
+    public function atualizar(ContatosRequest $request, $id){
+
+        $contato = Contato::find($id);
+        if(!empty($contato)) {
+            $contato->update($request->all());
+        }
+        return response()->json(["msg" => "Cadastrado com sucesso", "contato" => $contato]);
+    }
+
+
+    public function remover($id){
         $contato = Contato::find($id);
         $contato->delete();
-        return redirect()
-            ->action('ContatoController@lista');
-    }
-
-    public function listaJson(){
-        $contatos = Contato::all();
-        return response()->json($contatos);
+        return response()->json(["msg" => "Deletado com sucesso"]);
     }
 
 }

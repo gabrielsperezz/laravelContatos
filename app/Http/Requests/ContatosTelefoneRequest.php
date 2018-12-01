@@ -2,7 +2,7 @@
 
 use contatos\Http\Requests\Request;
 
-class ContatosRequest extends Request {
+class ContatosTelefoneRequest extends Request {
 
     public function authorize()
     {
@@ -12,10 +12,8 @@ class ContatosRequest extends Request {
     public function rules()
     {
         return [
-            'nome' => 'required|max:100',
-            'email' => 'required|email|max:100',
-            'link_linkedin' => 'string|max:100',
-            'link_facebook' => 'string|max:100'
+            'id_tipo_telefone' => 'numeric',
+            'numero' => 'required|string|max:100'
         ];
     }
 

@@ -12,7 +12,7 @@ var genericIzitoastMenssage = (function ($) {
         var strErros = '';
 
         $.each(erros, function (index, value) {
-
+            value = value[0];
             if ((value || '').length > 0) {
                 var m = '';
                 m = template.replace('%value%', value);

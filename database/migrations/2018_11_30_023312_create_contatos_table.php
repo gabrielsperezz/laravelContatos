@@ -14,7 +14,7 @@ class CreateContatosTable extends Migration {
 	{
 		Schema::create('contatos', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('id')->unsigned();
             $table->string("nome");
             $table->string("email");
             $table->string("link_linkedin");

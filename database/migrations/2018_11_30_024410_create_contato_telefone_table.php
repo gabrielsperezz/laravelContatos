@@ -15,7 +15,7 @@ class CreateContatoTelefoneTable extends Migration {
 		Schema::create('contato_telefone', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string("telefone");
+			$table->string("numero");
 			$table->integer("id_contato")->unsigned();
             $table->integer('id_tipo_telefone')->unsigned();
 
@@ -24,7 +24,7 @@ class CreateContatoTelefoneTable extends Migration {
                 ->onDelete('cascade');
 
             $table->foreign('id_tipo_telefone')
-                ->references('id')->on('tipo_telefone');
+                ->references('id')->on('tipo_telefones');
 		});
 	}
 

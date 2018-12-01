@@ -7,9 +7,9 @@ class CreateTipoTelefoneTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('tipo_telefone', function(Blueprint $table)
+		Schema::create('tipo_telefones', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->string("descricao");
 		});
 	}

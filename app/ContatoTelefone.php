@@ -6,11 +6,10 @@ class ContatoTelefone extends Model {
 
     protected $table = 'contato_telefone';
     public $timestamps = false;
-
-    protected $fillable = ['numero', 'tipo'];
+    protected $fillable = ['numero', 'id_tipo_telefone', 'id_contato'];
 
     public function tipo(){
-        return $this->belongsTo('contatos\TipoTelefone');
+        return $this->belongsTo('contatos\TipoTelefone', 'id_tipo_telefone' );
     }
 
     public function contatos(){
