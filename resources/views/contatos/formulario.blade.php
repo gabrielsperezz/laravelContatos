@@ -21,7 +21,7 @@
                                     <a href="#tab_dados_basicos" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Dados básicos</a>
                                 </li>
                                 <li role="presentation"  @if (!isset($contato->id)) style="display: none;" @endif>
-                                    <a href="#tab_telefones" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Veiculos</a>
+                                    <a href="#tab_telefones" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false"><Contatosw></Contatosw></a>
                                 </li>
                             </ul>
                             <div id="myTabContent" class="tab-content">
